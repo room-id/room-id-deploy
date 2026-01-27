@@ -43,6 +43,22 @@ services:
       - internal_backend
     entrypoint: sh -c "trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done"
 
+    guard:
+      image: ghcr.io/room-id/room-id-guard:latest
+      container_name: roomid-guard
+      restart: unless-stopped
+      expose:
+        - "8000"
+      environment:
+        MODEL_PATH: /models/yolov8n.pt
+        CONF_THRESHOLD: "0.30"
+        IMG_SIZE: "480"
+      volumes:
+        - ${UPLOADS_PATH}:/uploads
+        - ./guard-models:/models:ro
+      networks:
+        - internal_backend
+
 
   backend:
     image: ghcr.io/room-id/room-id-backend:latest
@@ -51,6 +67,7 @@ services:
     depends_on:
       - mongo
       - qdrant
+      - guard
     expose:
       - "8080"
     environment:
@@ -59,6 +76,9 @@ services:
       GEOCODE_API_KEY: ${GEOCODE_API_KEY}
       UPLOAD_DIR: "/app/uploads"
       HOME: "/app"
+      GUARD_URL: "http://guard:8000"
+      GUARD_TIMEOUT_MS: "1500"
+      GUARD_UPLOADS_PREFIX_GUARD: "/uploads"
     volumes:
       - ${UPLOADS_PATH}:/app/uploads
       - ./model-cache:/app/.cache
