@@ -1,0 +1,3 @@
+services:
+  backend:
+    image: ghcr.io/room-id/room-id-backend:test

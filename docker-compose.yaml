@@ -58,8 +58,7 @@ services:
       - ${GUARD_MODELS_PATH}:/models:ro
     networks:
       - internal_backend
-
-
+      
 
   backend:
     image: ghcr.io/room-id/room-id-backend:latest
