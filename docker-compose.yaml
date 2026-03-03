@@ -43,6 +43,19 @@ services:
       - internal_backend
     entrypoint: sh -c "trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done"
 
+  frontend:
+    image: ghcr.io/room-id/room-id-frontend:latest
+    container_name: roomid-frontend
+    restart: unless-stopped
+    expose:
+      - "3000"
+    environment:
+      NEXT_PUBLIC_GOOGLE_API_KEY: ${NEXT_PUBLIC_GOOGLE_API_KEY}
+      NEXT_PUBLIC_RESEND_API_KEY: ${NEXT_PUBLIC_RESEND_API_KEY}
+      NEXT_PUBLIC_SECURITY_SERVICE_URL: "https://login.room-id.nl"
+      NEXT_PUBLIC_BACKEND_URL: "https://backend.room-id.nl"
+    networks:
+      - internal_backend
 
   jwt-server:
     image: ghcr.io/room-id/jwt-server:latest
