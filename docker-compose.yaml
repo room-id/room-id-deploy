@@ -44,7 +44,7 @@ services:
     entrypoint: sh -c "trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h; done"
 
   frontend:
-    image: ghcr.io/room-id/room-id-frontend:latest
+    image: ghcr.io/room-id/room-id-application:latest
     container_name: roomid-frontend
     restart: unless-stopped
     expose:
