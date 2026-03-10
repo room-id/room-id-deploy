@@ -52,6 +52,7 @@ services:
     environment:
       SECURITY_SERVICE_URL: "http://jwt-server:4001"
       NEXT_PUBLIC_SECURITY_SERVICE_URL: "https://login.room-id.nl"
+      BACKEND_URL: "http://backend:8080"
       NEXT_PUBLIC_BACKEND_URL: "https://backend.room-id.nl"
       NEXT_PUBLIC_GOOGLE_API_KEY: ${NEXT_PUBLIC_GOOGLE_API_KEY}
       NEXT_PUBLIC_RESEND_API_KEY: ${NEXT_PUBLIC_RESEND_API_KEY}
