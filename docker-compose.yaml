@@ -115,6 +115,10 @@ services:
       GUARD_URL: "http://guard:8000"
       GUARD_TIMEOUT_MS: "1500"
       GUARD_UPLOADS_PREFIX_GUARD: "/uploads"
+      ENABLE_OPENAI_RERANK: ${ENABLE_OPENAI_RERANK}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_RERANK_TIMEOUT_MS: ${OPENAI_RERANK_TIMEOUT_MS}
+      OPENAI_RERANK_MODEL: ${OPENAI_RERANK_MODEL}
     volumes:
       - ${UPLOADS_PATH}:/app/uploads
       - ./model-cache:/app/.cache
